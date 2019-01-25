@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import FormControl from "../../components/FormControl";
 import Auth from "../../context/AuthContext";
 import { users } from "../../misc";
-import "./SignIn.css";
+import "./SignInView.css";
 
 class SignInView extends Component {
   static contextType = Auth;

@@ -3,8 +3,8 @@ import { Switch, Route, Redirect } from "react-router-dom";
 
 import AuthContext from "./context/AuthContext";
 
-const SignInView = React.lazy(() => import("./views/SignIn"));
-const CalendarView = React.lazy(() => import("./views/Calendar"));
+const SignInView = React.lazy(() => import("./views/SignInView"));
+const CalendarView = React.lazy(() => import("./views/CalendarView"));
 
 const ProtectedRoute = ({ component: Component, allow, redirect = "/sign-in", ...rest }) => {
   return (

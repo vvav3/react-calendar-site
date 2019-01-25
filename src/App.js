@@ -5,34 +5,38 @@ import "./bootstrap.min.css";
 import "./App.css";
 import AppRouter from "./AppRouter";
 import NavBar from "./components/NavBar";
-import { signOut } from "./misc";
+import AuthContext from "./context/AuthContext";
 
 const userData = localStorage.getItem("userData");
-const AuthContext = React.createContext({ isAuthorized: userData !== undefined });
-
-console.log(AuthContext);
 
 class App extends Component {
   state = {
-    isAuthorized: userData !== undefined
+    isAuthorized: userData !== null
   };
 
-  onSignOut = () => {
-    const { history } = this.props;
-    signOut();
+  onLogin = data => {
+    localStorage.setItem("userData", data);
+    this.setState({ isAuthorized: true });
+    this.props.history.push("/");
+  };
+
+  onLogout = () => {
+    localStorage.removeItem("userData");
     this.setState({ isAuthorized: false });
-    history.push("/sign-in");
+    this.props.history.push("/sign-in");
   };
 
   render() {
     const { isAuthorized } = this.state;
 
-    const navItems = [{ key: 1, text: "Logout", onClick: this.onSignOut }];
+    const navItems = [{ key: 1, text: "Logout", onClick: this.onLogout }];
 
     return (
       <div className="app">
-        {isAuthorized && <NavBar title="Calendar App" items={navItems} />}
-        <AppRouter isAuthorized={isAuthorized} />
+        <AuthContext.Provider value={{ ...this.state, login: this.onLogin, logout: this.onLogout }}>
+          {isAuthorized && <NavBar title="Calendar App" items={navItems} />}
+          <AppRouter />
+        </AuthContext.Provider>
       </div>
     );
   }

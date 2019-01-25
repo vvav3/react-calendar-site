@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 
 import FormControl from "../../components/FormControl";
+import Auth from "../../context/AuthContext";
 import { users } from "../../misc";
 import "./SignIn.css";
 
 class SignInView extends Component {
+  static contextType = Auth;
+
   state = {
     email: "test@email.com",
     password: "test",
@@ -24,14 +27,12 @@ class SignInView extends Component {
     e.preventDefault();
 
     const { email, password } = this.state;
-    const { history, onSignIn } = this.props;
-    console.log(this.props);
 
     const userData = users.find(item => item.email === email);
     if (userData) {
       if (userData.password === password) {
-        history.push("/");
-        onSignIn(userData);
+        this.context.login(userData);
+        this.props.history.push("/");
       } else {
         this.setErrors({ password: "Wrong password" });
       }

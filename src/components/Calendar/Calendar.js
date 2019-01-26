@@ -1,14 +1,11 @@
 import React, { Component } from "react";
 import moment from "moment";
-// import CalendarDay from "./CalendarDay";
 
 import "./Calendar.css";
 import CalendarDay from "./CalendarDay";
 
 const today = moment().format("MMMM YYYY");
 const weekDays = moment.weekdaysShort();
-// const monthStart = moment().startOf("month");
-// const monthEnd = moment().endOf("month");
 
 const createCells = () => {
   const rows = 5;
@@ -17,8 +14,6 @@ const createCells = () => {
   const shift = moment()
     .startOf("month")
     .weekday();
-
-  console.log(shift);
 
   let arrDays = [];
 
@@ -45,17 +40,23 @@ const createCells = () => {
 
 class Calendar extends Component {
   state = {
-    cells: createCells()
+    cells: createCells(),
+    active: undefined
   };
 
-  componentDidMount() {
-    console.log(this.state.cells);
-  }
+  handleDayClick = day => {
+    this.setState(prevState => ({ active: prevState.active === day ? undefined : day }));
+  };
+
+  handleBlur = () => {
+    // this.setState({ active: undefined });
+  };
 
   render() {
-    const { cells } = this.state;
+    const { cells, active } = this.state;
+
     return (
-      <div className="calendar">
+      <div className="calendar" tabIndex={0} onBlur={this.handleBlur}>
         <div className="head">
           <div className="current-date">{today}</div>
           <div className="week-days-row">
@@ -70,7 +71,14 @@ class Calendar extends Component {
           {cells.map((row, i) => (
             <div className="dates-row" key={i}>
               {row.map(day => (
-                <CalendarDay key={day.key} date={day.date} disabled={day.disabled} />
+                <CalendarDay
+                  key={day.key}
+                  id={day.key}
+                  active={day.key === active}
+                  date={day.date}
+                  disabled={day.disabled}
+                  onClick={this.handleDayClick}
+                />
               ))}
             </div>
           ))}

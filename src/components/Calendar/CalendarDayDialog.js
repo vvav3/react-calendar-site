@@ -5,9 +5,16 @@ import styles from "./CalendarDayDialog.module.css";
 
 class CalendarDayDialog extends PureComponent {
   state = {
-    title: "Test title",
-    description: "Search for the keywords to learn more about each error."
+    title: "",
+    description: ""
   };
+
+  componentDidMount() {
+    const { data } = this.props;
+    if (data) {
+      this.setState(data);
+    }
+  }
 
   handleInputChange = e => {
     const { id, value } = e.target;

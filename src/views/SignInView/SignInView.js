@@ -9,8 +9,8 @@ class SignInView extends Component {
   static contextType = Auth;
 
   state = {
-    email: "test@email.com",
-    password: "test",
+    email: "",
+    password: "",
     errors: {}
   };
 

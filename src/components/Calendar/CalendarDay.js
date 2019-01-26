@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent, Fragment } from "react";
 import { Manager, Reference, Popper } from "react-popper";
 import cn from "classnames";
 
@@ -36,14 +36,18 @@ class CalendarDay extends PureComponent {
         <Reference>
           {({ ref }) => (
             <div className={dateCellStyle} ref={ref} onClick={this.handleCellClick}>
-              <button
-                className={cn("close text-primary", styles.close_btn)}
-                onClick={this.handleDeleteClick}
-              >
-                <span aria-hidden="true">×</span>
-              </button>
               <div className={styles.date}>{date}</div>
-              {data && <div className={styles.event_title}>{data.title}</div>}
+              {data && (
+                <Fragment>
+                  <button
+                    className={cn("close text-primary", styles.close_btn)}
+                    onClick={this.handleDeleteClick}
+                  >
+                    <span aria-hidden="true">×</span>
+                  </button>
+                  <div className={styles.event_title}>{data.title}</div>
+                </Fragment>
+              )}
             </div>
           )}
         </Reference>
@@ -52,7 +56,11 @@ class CalendarDay extends PureComponent {
           <Popper placement="right">
             {({ ref, style, placement }) => (
               <div className={styles.popper} ref={ref} style={style} data-placement={placement}>
-                <CalendarDayDialog onDismiss={onDismiss} onSubmit={this.handleDialogSubmit} />
+                <CalendarDayDialog
+                  data={data}
+                  onDismiss={onDismiss}
+                  onSubmit={this.handleDialogSubmit}
+                />
               </div>
             )}
           </Popper>

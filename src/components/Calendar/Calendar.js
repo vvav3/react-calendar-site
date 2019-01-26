@@ -4,6 +4,7 @@ import cn from "classnames";
 
 import styles from "./Calendar.module.css";
 import CalendarDay from "./CalendarDay";
+import { getInitialState, persistState } from "../../misc";
 
 const today = moment().format("MMMM YYYY");
 const weekDays = moment.weekdaysShort();
@@ -41,10 +42,16 @@ const createCells = () => {
 };
 
 class Calendar extends Component {
-  state = {
+  state = getInitialState("calendar_state", {
     cells: createCells(),
     active: undefined
-  };
+  });
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.cells !== this.state.cells) {
+      persistState("calendar_state", this.state);
+    }
+  }
 
   handleDaySelect = day => {
     this.setState(prevState => ({ active: prevState.active === day ? undefined : day }));

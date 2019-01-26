@@ -4,7 +4,7 @@ import Calendar from "../../components/Calendar/Calendar";
 class CalendarView extends Component {
   render() {
     return (
-      <main className="container p-3">
+      <main className="calendar-view container p-3">
         <Calendar />
       </main>
     );

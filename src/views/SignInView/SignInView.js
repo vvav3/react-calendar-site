@@ -3,11 +3,8 @@ import React, { Component } from "react";
 import FormControl from "../../components/FormControl";
 import Auth from "../../context/AuthContext";
 import { users } from "../../misc";
-import "./SignInView.css";
 
 class SignInView extends Component {
-  static contextType = Auth;
-
   state = {
     email: "",
     password: "",
@@ -45,8 +42,8 @@ class SignInView extends Component {
     const { email, password, errors } = this.state;
 
     return (
-      <main className="sign-in-page container">
-        <div className="row justify-content-center align-items-center">
+      <main className="sign-in-view container">
+        <div className="row justify-content-center align-items-center" style={{ height: "100vh" }}>
           <div className="segment small border rounded p-3">
             <form onSubmit={this.handleFormSubmit}>
               <h3>Sign In</h3>
@@ -80,5 +77,7 @@ class SignInView extends Component {
     );
   }
 }
+
+SignInView.contextType = Auth;
 
 export default SignInView;

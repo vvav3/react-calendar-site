@@ -1,0 +1,7 @@
+.dialog {
+  width: 400px;
+}
+
+.header {
+  flex-direction: column;
+}

@@ -1,55 +1,58 @@
-import React, { PureComponent, Fragment } from "react";
-import cn from "classnames";
+import React, { PureComponent } from "react";
 import { Manager, Reference, Popper } from "react-popper";
+import cn from "classnames";
 
 import styles from "./CalendarDay.module.css";
+import CalendarDayDialog from "./CalendarDayDialog";
 
 class CalendarDay extends PureComponent {
-  togglePopper = () => {
-    this.setState(prevState => ({ isOpen: !prevState.isOpen }));
+  handleCellClick = () => {
+    const { id, onSelect } = this.props;
+    onSelect(id);
   };
 
-  handleClick = () => {
-    const { id, onClick } = this.props;
-    onClick(id);
+  handleDeleteClick = e => {
+    const { id, onEventDelete } = this.props;
+    onEventDelete(id);
+    e.stopPropagation();
+  };
+
+  handleDialogSubmit = data => {
+    const { id, onEventSubmit } = this.props;
+    onEventSubmit({ id, data });
   };
 
   render() {
-    const { date, disabled, active } = this.props;
+    const { date, data, disabled, active, onDismiss } = this.props;
+
+    const dateCellStyle = cn(styles["date-cell"], {
+      [styles.disabled]: disabled,
+      [styles.active]: active,
+      [styles.info]: data !== null
+    });
 
     return (
       <Manager>
         <Reference>
           {({ ref }) => (
-            <div
-              className={cn("date-cell", { disabled, active })}
-              ref={ref}
-              onClick={this.handleClick}
-            >
-              <div className="date">{date}</div>
+            <div className={dateCellStyle} ref={ref} onClick={this.handleCellClick}>
+              <button
+                className={cn("close text-primary", styles.close_btn)}
+                onClick={this.handleDeleteClick}
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+              <div className={styles.date}>{date}</div>
+              {data && <div className={styles.event_title}>{data.title}</div>}
             </div>
           )}
         </Reference>
 
         {active && (
           <Popper placement="right">
-            {({ ref, style, placement, arrowProps }) => (
+            {({ ref, style, placement }) => (
               <div className={styles.popper} ref={ref} style={style} data-placement={placement}>
-                <div className={cn("card text-white bg-primary", styles.popup)}>
-                  <div className="card-header"><input className="form-control"/></div>
-                  <div className="card-body">
-                    <h4 className="card-title">Primary card title</h4>
-                    <p className="card-text">
-                      Some quick example text to build on the card title and make up the bulk of the
-                      card's content.
-                    </p>
-                  </div>
-                  <div
-                    className={styles["popper-arrow"]}
-                    ref={arrowProps.ref}
-                    style={arrowProps.style}
-                  />
-                </div>
+                <CalendarDayDialog onDismiss={onDismiss} onSubmit={this.handleDialogSubmit} />
               </div>
             )}
           </Popper>

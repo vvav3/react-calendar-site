@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import moment from "moment";
+import cn from "classnames";
 
-import "./Calendar.css";
+import styles from "./Calendar.module.css";
 import CalendarDay from "./CalendarDay";
 
 const today = moment().format("MMMM YYYY");
@@ -25,6 +26,7 @@ const createCells = () => {
       for (let j = 0; j < days; j++) {
         arrDays[i][j] = {
           key: cell,
+          data: null,
           disabled: cell - shift < 1 || cell > totalCells - shift,
           date: moment()
             .date(cell - shift)
@@ -44,45 +46,80 @@ class Calendar extends Component {
     active: undefined
   };
 
-  handleDayClick = day => {
+  handleDaySelect = day => {
     this.setState(prevState => ({ active: prevState.active === day ? undefined : day }));
   };
 
-  handleBlur = () => {
-    // this.setState({ active: undefined });
+  clearActive = () => {
+    this.setState({ active: undefined });
+  };
+
+  handleEventSubmit = val => {
+    let newCells = [...this.state.cells];
+
+    for (let i = 0; i < newCells.length; i++) {
+      for (let j = 0; j < newCells[i].length; j++) {
+        if (newCells[i][j].key === val.id) {
+          newCells[i][j].data = val.data;
+          break;
+        }
+      }
+    }
+
+    this.setState({ cells: newCells, active: undefined });
+  };
+
+  handleEventDelete = id => {
+    let newCells = [...this.state.cells];
+
+    for (let i = 0; i < newCells.length; i++) {
+      for (let j = 0; j < newCells[i].length; j++) {
+        if (newCells[i][j].key === id) {
+          newCells[i][j].data = null;
+          break;
+        }
+      }
+    }
+
+    this.setState({ cells: newCells });
   };
 
   render() {
     const { cells, active } = this.state;
 
     return (
-      <div className="calendar" tabIndex={0} onBlur={this.handleBlur}>
-        <div className="head">
-          <div className="current-date">{today}</div>
-          <div className="week-days-row">
+      <div className={styles.calendar}>
+        <div className={styles.head}>
+          <div className={styles.current_date}>{today}</div>
+          <div className={styles.week_days_row}>
             {weekDays.map((item, i) => (
-              <div className="week-day" key={i}>
+              <div className={styles.week_day} key={i}>
                 {item}
               </div>
             ))}
           </div>
         </div>
-        <div className="body">
+        <div className={cn(styles.body, { [styles.active]: active })}>
           {cells.map((row, i) => (
-            <div className="dates-row" key={i}>
+            <div className={styles.dates_row} key={i}>
               {row.map(day => (
                 <CalendarDay
                   key={day.key}
                   id={day.key}
                   active={day.key === active}
+                  data={day.data}
                   date={day.date}
                   disabled={day.disabled}
-                  onClick={this.handleDayClick}
+                  onSelect={this.handleDaySelect}
+                  onDismiss={this.clearActive}
+                  onEventDelete={this.handleEventDelete}
+                  onEventSubmit={this.handleEventSubmit}
                 />
               ))}
             </div>
           ))}
         </div>
+        {active && <div className={styles.shadow} onClick={this.clearActive} />}
       </div>
     );
   }

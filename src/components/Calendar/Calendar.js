@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import moment from "moment";
-import cn from "classnames";
+import cn from "clsx";
 
 import styles from "./Calendar.module.css";
 import CalendarDay from "./CalendarDay";

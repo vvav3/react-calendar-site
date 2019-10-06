@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import cn from "classnames";
+import cn from "clsx";
 
 import styles from "./CalendarDayDialog.module.css";
 

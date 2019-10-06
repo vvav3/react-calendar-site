@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from "react";
 import { Manager, Reference, Popper } from "react-popper";
-import cn from "classnames";
+import cn from "clsx";
 
 import styles from "./CalendarDay.module.css";
 import CalendarDayDialog from "./CalendarDayDialog";

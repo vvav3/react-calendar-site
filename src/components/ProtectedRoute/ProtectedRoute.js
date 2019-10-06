@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect } from "react-router";
 
 const ProtectedRoute = ({ component: Component, allow, redirect = "/sign-in", ...rest }) => {
   return (

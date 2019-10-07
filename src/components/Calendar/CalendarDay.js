@@ -53,7 +53,7 @@ class CalendarDay extends PureComponent {
         </Reference>
 
         {active && (
-          <Popper placement="right">
+          <Popper placement="right-start">
             {({ ref, style, placement }) => (
               <div className={styles.popper} ref={ref} style={style} data-placement={placement}>
                 <CalendarDayDialog

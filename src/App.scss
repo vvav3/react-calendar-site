@@ -30,3 +30,10 @@ code {
     box-shadow: none;
   }
 }
+
+#suspense-spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

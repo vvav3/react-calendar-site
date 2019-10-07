@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
-import { persistState } from "utils";
+import { persistState, getInitialState } from "utils";
 import users from "users.json";
 
 const AuthContext = React.createContext();
-const userData = localStorage.getItem("userData");
+const userData = getInitialState("userData");
 
 export const ContextWrapper = ({ children }) => {
-  const [isAuthorized, setIsAuthorized] = useState(userData !== null);
+  const [isAuthorized, setIsAuthorized] = useState(Boolean(userData));
   const history = useHistory();
 
   function login(data) {
@@ -21,7 +21,7 @@ export const ContextWrapper = ({ children }) => {
   }
 
   function logout() {
-    localStorage.removeItem("userData");
+    sessionStorage.removeItem("userData");
     setIsAuthorized(false);
     history.push("/sign-in");
   }

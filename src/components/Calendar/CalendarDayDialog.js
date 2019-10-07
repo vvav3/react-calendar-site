@@ -1,7 +1,5 @@
 import React, { PureComponent } from "react";
-import cn from "clsx";
-
-import styles from "./CalendarDayDialog.module.css";
+import "./CalendarDayDialog.scoped.scss";
 
 class CalendarDayDialog extends PureComponent {
   state = {
@@ -31,10 +29,10 @@ class CalendarDayDialog extends PureComponent {
     const { onDismiss } = this.props;
 
     return (
-      <div className={styles["dialog"]}>
+      <div className="dialog">
         <form className="modal-dialog" onSubmit={this.handleFormSubmit}>
           <div className="modal-content">
-            <div className={cn("modal-header", styles.header)}>
+            <div className="modal-header">
               <label htmlFor="title">Title</label>
               <input
                 className="form-control"
@@ -67,7 +65,7 @@ class CalendarDayDialog extends PureComponent {
             </div>
           </div>
         </form>
-        <div className={styles.shadow} />
+        <div className="shadow" />
       </div>
     );
   }

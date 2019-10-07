@@ -5,6 +5,15 @@ import cn from "clsx";
 import styles from "./CalendarDay.module.css";
 import CalendarDayDialog from "./CalendarDayDialog";
 
+const popperModifiers = {
+  flip: {
+    behavior: "flip"
+  },
+  preventOverflow: {
+    boundariesElement: document.querySelector("#root")
+  }
+};
+
 class CalendarDay extends PureComponent {
   handleCellClick = () => {
     const { id, onSelect } = this.props;
@@ -53,7 +62,7 @@ class CalendarDay extends PureComponent {
         </Reference>
 
         {active && (
-          <Popper placement="right-start">
+          <Popper placement="right-start" modifiers={popperModifiers}>
             {({ ref, style, placement }) => (
               <div className={styles.popper} ref={ref} style={style} data-placement={placement}>
                 <CalendarDayDialog

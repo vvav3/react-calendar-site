@@ -7,7 +7,7 @@ import AuthContainer from "containers/AuthContainer/AuthContainer";
 import NavBar from "components/NavBar";
 
 const Login = React.lazy(() => import("views/Login"));
-const CalendarView = React.lazy(() => import("views/CalendarView"));
+const Calendar = React.lazy(() => import("views/Calendar"));
 
 const ProtectedRoute = ({ component: Component, allow, redirect = "/sign-in", ...rest }) => {
   return (
@@ -39,7 +39,7 @@ const App = () => {
             />
             <ProtectedRoute
               path="/"
-              component={CalendarView}
+              component={Calendar}
               allow={isAuthorized}
               redirect="/sign-in"
               exact

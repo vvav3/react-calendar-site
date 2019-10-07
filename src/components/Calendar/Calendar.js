@@ -4,7 +4,7 @@ import cn from "clsx";
 
 import styles from "./Calendar.module.css";
 import CalendarDay from "./CalendarDay";
-import { getInitialState, persistState } from "../../misc";
+import { getInitialState, persistState } from "utils";
 
 const today = moment().format("MMMM YYYY");
 const weekDays = moment.weekdaysShort();

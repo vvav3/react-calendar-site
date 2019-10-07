@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
-import { persistState } from "misc";
+import { persistState } from "utils";
 import users from "users.json";
 
 const AuthContext = React.createContext();
-
 const userData = localStorage.getItem("userData");
 
 function checkCredentials(credentials) {

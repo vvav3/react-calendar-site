@@ -4,8 +4,7 @@ import { Form, Field } from "react-final-form";
 import createDecorator from "final-form-focus";
 import isEmail from "validator/lib/isEmail";
 
-import { InputAdapter } from "components/Input/Input";
-import { getFirstResponseError } from "utils";
+import { InputAdapter } from "components/Input";
 import AuthContext from "contexts/AuthContext";
 
 const focusOnError = createDecorator();

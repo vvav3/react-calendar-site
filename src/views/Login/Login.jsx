@@ -9,10 +9,6 @@ import AuthContext from "contexts/AuthContext";
 
 const focusOnError = createDecorator();
 
-function getFormError(form) {
-  return form.submitError || Object.values(form.errors)[0];
-}
-
 const SignInView = ({ history }) => {
   const { login } = useContext(AuthContext);
 

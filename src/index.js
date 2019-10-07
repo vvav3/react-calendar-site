@@ -6,7 +6,7 @@ import { Router } from "react-router";
 
 import * as serviceWorker from "./serviceWorker";
 import App from "./App";
-import { ContextWrapper as AuthContextWrapper } from "./context/AuthContext";
+import { ContextWrapper as AuthContextWrapper } from "./contexts/AuthContext";
 
 const history = createBrowserHistory();
 

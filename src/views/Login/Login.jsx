@@ -1,13 +1,18 @@
 import React, { useContext } from "react";
+import { FORM_ERROR } from "final-form";
 import { Form, Field } from "react-final-form";
 import createDecorator from "final-form-focus";
 import isEmail from "validator/lib/isEmail";
 
 import { InputAdapter } from "components/Input/Input";
 import { getFirstResponseError } from "utils";
-import AuthContext from "context/AuthContext";
+import AuthContext from "contexts/AuthContext";
 
 const focusOnError = createDecorator();
+
+function getFormError(form) {
+  return form.submitError || Object.values(form.errors)[0];
+}
 
 const SignInView = ({ history }) => {
   const { login } = useContext(AuthContext);
@@ -26,10 +31,8 @@ const SignInView = ({ history }) => {
     try {
       await new Promise(resolve => setTimeout(resolve, 1000));
       login(data);
-      history.push("/projects");
     } catch (err) {
-      const errorText = getFirstResponseError(err.response);
-      alert(errorText);
+      return { [FORM_ERROR]: err.message };
     }
   }
 
@@ -37,18 +40,20 @@ const SignInView = ({ history }) => {
     <div className="row justify-content-center align-items-center vh-100">
       <div className="segment small border rounded p-3">
         <Form
-          subscription={{ submitting: true, submitError: true }}
           decorators={[focusOnError]}
           validate={validate}
           onSubmit={submitForm}
           render={form => (
             <form onSubmit={form.handleSubmit}>
-              <h3>Sign In</h3>
+              <h3 className="mb-3">Sign In</h3>
               <Field component={InputAdapter} label="Email" name="email" type="email" />
               <Field component={InputAdapter} label="Password" name="password" type="password" />
-              <button type="submit" disabled={form.submitting} className="btn btn-primary">
-                Login
-              </button>
+              <div className="d-flex">
+                <button type="submit" disabled={form.submitting} className="btn btn-primary">
+                  Login
+                </button>
+                {form.submitFailed && <p className="text-danger ml-3 mb-0">{form.submitError}</p>}
+              </div>
             </form>
           )}
         />

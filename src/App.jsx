@@ -2,7 +2,7 @@ import React, { Suspense, useContext } from "react";
 import { Switch, Route, Redirect } from "react-router";
 
 import "App.scss";
-import AuthContext from "context/AuthContext";
+import AuthContext from "contexts/AuthContext";
 import AuthContainer from "containers/AuthContainer/AuthContainer";
 import NavBar from "components/NavBar";
 

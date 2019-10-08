@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
-import { persistState, getInitialState } from "utils";
+import { persistState, getPersistedState } from "utils";
 import users from "users.json";
 
 const AuthContext = React.createContext();
-const userData = getInitialState("userData");
+const userData = getPersistedState("userData");
 
 export const ContextWrapper = ({ children }) => {
   const [isAuthorized, setIsAuthorized] = useState(Boolean(userData));

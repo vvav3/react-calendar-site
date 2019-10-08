@@ -1,0 +1,52 @@
+$head-bg: #ecf0f1;
+$border-color: #ced4da;
+
+.calendar {
+  width: 100%;
+  border: 1px solid $border-color;
+  flex-wrap: wrap;
+
+  &-head {
+    background-color: $head-bg;
+    border-bottom: 1px solid $border-color;
+
+    .current-date {
+      font-weight: bold;
+      font-size: 18px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .week-days-row {
+      display: flex;
+      padding: 20px 0;
+      justify-content: space-between;
+
+      .week-day {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+
+  .dates-row {
+    display: flex;
+    height: 100px;
+    border-bottom: 1px solid $border-color;
+
+    &:last-of-type {
+      border: none;
+    }
+  }
+}
+
+.shadow {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  content: "";
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}

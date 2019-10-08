@@ -3,7 +3,7 @@ import "./NavBar.scoped.scss";
 
 const NavBar = ({ title, items }) => (
   <nav className="navbar navbar-expand navbar-dark bg-primary">
-    <div className="container">
+    <div className="container pl-3 pr-3">
       <a className="navbar-brand" href="/">
         {title}
       </a>

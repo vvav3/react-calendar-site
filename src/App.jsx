@@ -3,11 +3,12 @@ import { Switch, Route, Redirect } from "react-router";
 
 import "App.scss";
 import AuthContext from "contexts/AuthContext";
+import AppContainer from "containers/AppContainer/AppContainer";
 import AuthContainer from "containers/AuthContainer/AuthContainer";
 import Spinner from "components/Spinner";
 
 const Login = React.lazy(() => import("views/Login"));
-const CalendarView = React.lazy(() => import("views/CalendarView"));
+const Calendar = React.lazy(() => import("views/Calendar"));
 
 const ProtectedRoute = ({ component: Component, allow, redirect = "/sign-in", ...rest }) => {
   return (
@@ -20,7 +21,7 @@ const ProtectedRoute = ({ component: Component, allow, redirect = "/sign-in", ..
 
 const App = () => {
   const { isAuthorized } = useContext(AuthContext);
-  const Container = isAuthorized ? "div" : AuthContainer;
+  const Container = isAuthorized ? AppContainer : AuthContainer;
 
   return (
     <div className="app">
@@ -36,7 +37,7 @@ const App = () => {
             />
             <ProtectedRoute
               path="/"
-              component={CalendarView}
+              component={Calendar}
               allow={isAuthorized}
               redirect="/sign-in"
               exact

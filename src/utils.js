@@ -4,6 +4,6 @@ export const persistState = (key, state) => {
   return sessionStorage.setItem(key, JSON.stringify(state));
 };
 
-export const getInitialState = (key, fallBack) => {
+export const getPersistedState = (key, fallBack) => {
   return JSON.parse(sessionStorage.getItem(key)) || fallBack;
 };
